@@ -10,6 +10,20 @@ const studentTestsQueryValidator = [
     .trim(),
 ];
 
+const performedExamsQueryValidator = [
+  query("page").optional().isInt({ min: 1 }).withMessage("page must be >= 1"),
+  query("limit").optional().isInt({ min: 1 }).withMessage("limit must be >= 1"),
+  query("search")
+    .optional()
+    .isString()
+    .withMessage("search must be a string")
+    .trim(),
+  query("status")
+    .optional()
+    .isIn(["submitted", "timeout", "all"])
+    .withMessage("status must be submitted, timeout, or all"),
+];
+
 const testIdParamValidator = [
   param("testId").isMongoId().withMessage("testId must be a valid Mongo id"),
 ];
@@ -72,6 +86,7 @@ const resultAttemptValidator = [...attemptIdParamValidator];
 
 module.exports = {
   studentTestsQueryValidator,
+  performedExamsQueryValidator,
   testIdParamValidator,
   attemptIdParamValidator,
   startTestValidator,

@@ -6,20 +6,62 @@
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    { "key": "base_url", "value": "http://localhost:5000" },
-    { "key": "api_prefix", "value": "/api" },
-    { "key": "auth_token", "value": "" },
-    { "key": "teacher_token", "value": "" },
-    { "key": "student_token", "value": "" },
-    { "key": "admin_token", "value": "" },
-    { "key": "testId", "value": "" },
-    { "key": "slotId", "value": "" },
-    { "key": "questionSetId", "value": "" },
-    { "key": "questionId", "value": "" },
-    { "key": "optionId", "value": "" },
-    { "key": "attemptId", "value": "" },
-    { "key": "answerId", "value": "" },
-    { "key": "studentUserId", "value": "" }
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "api_prefix",
+      "value": "/api"
+    },
+    {
+      "key": "auth_token",
+      "value": ""
+    },
+    {
+      "key": "teacher_token",
+      "value": ""
+    },
+    {
+      "key": "student_token",
+      "value": ""
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "testId",
+      "value": ""
+    },
+    {
+      "key": "slotId",
+      "value": ""
+    },
+    {
+      "key": "questionSetId",
+      "value": ""
+    },
+    {
+      "key": "questionId",
+      "value": ""
+    },
+    {
+      "key": "optionId",
+      "value": ""
+    },
+    {
+      "key": "attemptId",
+      "value": ""
+    },
+    {
+      "key": "answerId",
+      "value": ""
+    },
+    {
+      "key": "studentUserId",
+      "value": ""
+    }
   ],
   "item": [
     {
@@ -32,10 +74,44 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/health",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "health"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "health"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Health - Success Example",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/health",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\",\n  \"message\": \"Online test backend is running\",\n  \"timestamp\": \"2026-04-11T12:00:00.000Z\"\n}"
+            }
+          ]
         }
       ]
     },
@@ -60,17 +136,67 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"full_name\": \"Demo Student Register\",\n  \"email\": \"new.student@example.com\",\n  \"user_id_login\": \"newstudent\",\n  \"password\": \"Student@123\",\n  \"role\": \"student\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/register",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "auth", "register"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "auth",
+                "register"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Register User - Success Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Demo Student Register\",\n  \"email\": \"new.student@example.com\",\n  \"user_id_login\": \"newstudent\",\n  \"password\": \"Student@123\",\n  \"role\": \"student\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Registration successful\",\n  \"data\": {\n    \"token\": \"<access_token>\",\n    \"access_token\": \"<access_token>\",\n    \"refresh_token\": \"<refresh_token>\",\n    \"access_expires_in\": \"15m\",\n    \"refresh_expires_in\": \"7d\",\n    \"user\": {\n      \"id\": \"680000000000000000000101\",\n      \"ref_id\": \"U-kx83ab\",\n      \"full_name\": \"Demo Student Register\",\n      \"email\": \"new.student@example.com\",\n      \"user_id_login\": \"newstudent\",\n      \"role\": \"student\",\n      \"status\": \"active\",\n      \"profile_image\": null,\n      \"phone\": null,\n      \"last_login_at\": null\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Login Teacher",
@@ -91,17 +217,67 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"login\": \"teacher1\",\n  \"password\": \"Teacher@123\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "auth",
+                "login"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Login Teacher - Success Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login\": \"teacher1\",\n  \"password\": \"Teacher@123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"token\": \"<teacher_access_token>\",\n    \"access_token\": \"<teacher_access_token>\",\n    \"refresh_token\": \"<teacher_refresh_token>\",\n    \"access_expires_in\": \"15m\",\n    \"refresh_expires_in\": \"7d\",\n    \"user\": {\n      \"id\": \"680000000000000000000001\",\n      \"ref_id\": \"T-001\",\n      \"full_name\": \"Demo Teacher\",\n      \"email\": \"teacher@example.com\",\n      \"user_id_login\": \"teacher1\",\n      \"role\": \"teacher\",\n      \"status\": \"active\",\n      \"profile_image\": null,\n      \"phone\": null,\n      \"last_login_at\": \"2026-04-11T12:00:00.000Z\"\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Login Student",
@@ -122,17 +298,67 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"login\": \"student1\",\n  \"password\": \"Student@123\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "auth",
+                "login"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Login Student - Success Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login\": \"student1\",\n  \"password\": \"Student@123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"token\": \"<student_access_token>\",\n    \"access_token\": \"<student_access_token>\",\n    \"refresh_token\": \"<student_refresh_token>\",\n    \"access_expires_in\": \"15m\",\n    \"refresh_expires_in\": \"7d\",\n    \"user\": {\n      \"id\": \"680000000000000000000002\",\n      \"ref_id\": \"S-001\",\n      \"full_name\": \"Demo Student\",\n      \"email\": \"student@example.com\",\n      \"user_id_login\": \"student1\",\n      \"role\": \"student\",\n      \"status\": \"active\",\n      \"profile_image\": null,\n      \"phone\": null,\n      \"last_login_at\": \"2026-04-11T12:00:00.000Z\"\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Login Admin",
@@ -153,17 +379,67 @@
           ],
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"login\": \"admin1\",\n  \"password\": \"Admin@123\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "auth",
+                "login"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Login Admin - Success Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"login\": \"admin1\",\n  \"password\": \"Admin@123\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"token\": \"<admin_access_token>\",\n    \"access_token\": \"<admin_access_token>\",\n    \"refresh_token\": \"<admin_refresh_token>\",\n    \"access_expires_in\": \"15m\",\n    \"refresh_expires_in\": \"7d\",\n    \"user\": {\n      \"id\": \"680000000000000000000003\",\n      \"ref_id\": \"A-001\",\n      \"full_name\": \"Demo Admin\",\n      \"email\": \"admin@example.com\",\n      \"user_id_login\": \"admin1\",\n      \"role\": \"admin\",\n      \"status\": \"active\",\n      \"profile_image\": null,\n      \"phone\": null,\n      \"last_login_at\": \"2026-04-11T12:00:00.000Z\"\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Me",
@@ -171,33 +447,133 @@
             "auth": {
               "type": "bearer",
               "bearer": [
-                { "key": "token", "value": "{{auth_token}}", "type": "string" }
+                {
+                  "key": "token",
+                  "value": "{{auth_token}}",
+                  "type": "string"
+                }
               ]
             },
             "method": "GET",
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/me",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "auth", "me"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "auth",
+                "me"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Me - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{auth_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/auth/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "auth",
+                    "me"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Current user profile fetched\",\n  \"data\": {\n    \"id\": \"680000000000000000000001\",\n    \"ref_id\": \"T-001\",\n    \"full_name\": \"Demo Teacher\",\n    \"email\": \"teacher@example.com\",\n    \"user_id_login\": \"teacher1\",\n    \"role\": \"teacher\",\n    \"status\": \"active\",\n    \"profile_image\": null,\n    \"phone\": null,\n    \"last_login_at\": \"2026-04-11T12:00:00.000Z\"\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Seed Register (Dev)",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"full_name\": \"Seed Teacher\",\n  \"email\": \"seed.teacher@example.com\",\n  \"user_id_login\": \"seedteacher\",\n  \"password\": \"Teacher@123\",\n  \"role\": \"teacher\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/auth/seed-register",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "auth", "seed-register"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "auth",
+                "seed-register"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Seed Register (Dev) - Success Example",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"full_name\": \"Seed Teacher\",\n  \"email\": \"seed.teacher@example.com\",\n  \"user_id_login\": \"seedteacher\",\n  \"password\": \"Teacher@123\",\n  \"role\": \"teacher\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/auth/seed-register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "auth",
+                    "seed-register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Seed user created\",\n  \"data\": {\n    \"id\": \"680000000000000000000005\",\n    \"ref_id\": \"U-kx83cd\",\n    \"full_name\": \"Seed Teacher\",\n    \"email\": \"seed.teacher@example.com\",\n    \"user_id_login\": \"seedteacher\",\n    \"role\": \"teacher\",\n    \"status\": \"active\",\n    \"profile_image\": null,\n    \"phone\": null,\n    \"last_login_at\": null\n  }\n}"
+            }
+          ]
         }
       ]
     },
@@ -232,17 +608,77 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"title\": \"Sample Mid Term Test\",\n  \"start_time\": \"2026-12-01T09:00:00.000Z\",\n  \"end_time\": \"2026-12-01T11:00:00.000Z\",\n  \"duration_minutes\": 90,\n  \"question_type_mode\": \"mixed\",\n  \"negative_marking_enabled\": true,\n  \"negative_mark_per_wrong\": 0.25,\n  \"instructions\": \"Read all questions carefully\",\n  \"show_result_to_student\": true\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "teacher", "tests"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "teacher",
+                "tests"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Create Test - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Sample Mid Term Test\",\n  \"start_time\": \"2026-12-01T09:00:00.000Z\",\n  \"end_time\": \"2026-12-01T11:00:00.000Z\",\n  \"duration_minutes\": 90,\n  \"question_type_mode\": \"mixed\",\n  \"negative_marking_enabled\": true,\n  \"negative_mark_per_wrong\": 0.25,\n  \"instructions\": \"Read all questions carefully\",\n  \"show_result_to_student\": true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test created successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001001\",\n    \"title\": \"Sample Mid Term Test\",\n    \"slug\": \"sample-mid-term-test\",\n    \"created_by\": \"680000000000000000000001\",\n    \"total_candidates\": 0,\n    \"total_slots\": 0,\n    \"total_question_set\": 0,\n    \"question_type_mode\": \"mixed\",\n    \"negative_marking_enabled\": true,\n    \"negative_mark_per_wrong\": 0.25,\n    \"start_time\": \"2026-12-01T09:00:00.000Z\",\n    \"end_time\": \"2026-12-01T11:00:00.000Z\",\n    \"duration_minutes\": 90,\n    \"status\": \"draft\",\n    \"basic_info_completed\": true,\n    \"question_set_completed\": false,\n    \"instructions\": \"Read all questions carefully\",\n    \"show_result_to_student\": true,\n    \"randomize_question_order\": false,\n    \"randomize_option_order\": false,\n    \"created_at\": \"2026-04-11T12:00:00.000Z\",\n    \"updated_at\": \"2026-04-11T12:00:00.000Z\"\n  }\n}"
+            }
+          ]
         },
         {
           "name": "List Tests",
@@ -261,16 +697,92 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests?page=1&limit=10&search=&status=",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "teacher", "tests"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "teacher",
+                "tests"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "limit", "value": "10" },
-                { "key": "search", "value": "" },
-                { "key": "status", "value": "" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": ""
+                }
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "List Tests - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests?page=1&limit=10&search=&status=",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": ""
+                    },
+                    {
+                      "key": "status",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test list fetched\",\n  \"data\": [\n    {\n      \"_id\": \"680000000000000000001001\",\n      \"title\": \"Sample Mid Term Test\",\n      \"status\": \"draft\",\n      \"start_time\": \"2026-12-01T09:00:00.000Z\",\n      \"end_time\": \"2026-12-01T11:00:00.000Z\",\n      \"duration_minutes\": 90,\n      \"total_candidates\": 0,\n      \"total_slots\": 0,\n      \"total_question_set\": 0\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Test Details",
@@ -289,10 +801,58 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "teacher", "tests", "{{testId}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "teacher",
+                "tests",
+                "{{testId}}"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Test Details - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test details fetched\",\n  \"data\": {\n    \"_id\": \"680000000000000000001001\",\n    \"title\": \"Sample Mid Term Test\",\n    \"status\": \"draft\",\n    \"counts\": {\n      \"total_slots\": 1,\n      \"total_question_sets\": 1,\n      \"total_questions\": 3\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Update Test",
@@ -308,17 +868,79 @@
               ]
             },
             "method": "PATCH",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"title\": \"Updated Mid Term Test\",\n  \"instructions\": \"Updated instructions\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "teacher", "tests", "{{testId}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "teacher",
+                "tests",
+                "{{testId}}"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Update Test - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated Mid Term Test\",\n  \"instructions\": \"Updated instructions\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test updated successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001001\",\n    \"title\": \"Updated Mid Term Test\",\n    \"instructions\": \"Updated instructions\",\n    \"updated_at\": \"2026-04-11T12:10:00.000Z\"\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Create Slot",
@@ -348,14 +970,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"start_time\": \"2026-12-01T09:00:00.000Z\",\n  \"end_time\": \"2026-12-01T10:30:00.000Z\",\n  \"duration_minutes\": 90,\n  \"candidate_limit\": 50\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/slots",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -364,7 +993,58 @@
                 "slots"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Create Slot - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_time\": \"2026-12-01T09:00:00.000Z\",\n  \"end_time\": \"2026-12-01T10:30:00.000Z\",\n  \"duration_minutes\": 90,\n  \"candidate_limit\": 50\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/slots",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "slots"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Slot created successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001101\",\n    \"test_id\": \"680000000000000000001001\",\n    \"slot_no\": 1,\n    \"start_time\": \"2026-12-01T09:00:00.000Z\",\n    \"end_time\": \"2026-12-01T10:30:00.000Z\",\n    \"duration_minutes\": 90,\n    \"candidate_limit\": 50,\n    \"status\": \"active\"\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Create Question Set",
@@ -394,14 +1074,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"set_name\": \"Set A\",\n  \"set_no\": 1\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/question-sets",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -410,7 +1097,58 @@
                 "question-sets"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Create Question Set - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"set_name\": \"Set A\",\n  \"set_no\": 1\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/question-sets",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "question-sets"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question set created successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001201\",\n    \"test_id\": \"680000000000000000001001\",\n    \"set_name\": \"Set A\",\n    \"set_no\": 1,\n    \"total_questions\": 0,\n    \"total_marks\": 0,\n    \"status\": \"active\"\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Create Question",
@@ -443,14 +1181,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"question_set_id\": \"{{questionSetId}}\",\n  \"question_type\": \"radio\",\n  \"title_html\": \"<p>What is 2 + 2 ?</p>\",\n  \"plain_text\": \"What is 2 + 2 ?\",\n  \"score\": 1,\n  \"negative_mark\": 0.25,\n  \"options\": [\n    {\"option_key\": \"A\", \"option_text_html\": \"<p>3</p>\", \"is_correct\": false, \"sort_order\": 1},\n    {\"option_key\": \"B\", \"option_text_html\": \"<p>4</p>\", \"is_correct\": true, \"sort_order\": 2},\n    {\"option_key\": \"C\", \"option_text_html\": \"<p>5</p>\", \"is_correct\": false, \"sort_order\": 3}\n  ]\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/questions",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -459,7 +1204,58 @@
                 "questions"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Create Question - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"question_set_id\": \"{{questionSetId}}\",\n  \"question_type\": \"radio\",\n  \"title_html\": \"<p>What is 2 + 2 ?</p>\",\n  \"plain_text\": \"What is 2 + 2 ?\",\n  \"score\": 1,\n  \"negative_mark\": 0.25,\n  \"options\": [\n    {\"option_key\": \"A\", \"option_text_html\": \"<p>3</p>\", \"is_correct\": false, \"sort_order\": 1},\n    {\"option_key\": \"B\", \"option_text_html\": \"<p>4</p>\", \"is_correct\": true, \"sort_order\": 2},\n    {\"option_key\": \"C\", \"option_text_html\": \"<p>5</p>\", \"is_correct\": false, \"sort_order\": 3}\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/questions",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "questions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question created successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001301\",\n    \"test_id\": \"680000000000000000001001\",\n    \"question_set_id\": \"680000000000000000001201\",\n    \"question_no\": 1,\n    \"question_type\": \"radio\",\n    \"title_html\": \"<p>What is 2 + 2 ?</p>\",\n    \"plain_text\": \"What is 2 + 2 ?\",\n    \"score\": 1,\n    \"negative_mark\": 0.25,\n    \"status\": \"active\",\n    \"options\": [\n      {\n        \"_id\": \"680000000000000000001401\",\n        \"option_key\": \"A\",\n        \"option_text_html\": \"<p>3</p>\",\n        \"is_correct\": false,\n        \"sort_order\": 1\n      },\n      {\n        \"_id\": \"680000000000000000001402\",\n        \"option_key\": \"B\",\n        \"option_text_html\": \"<p>4</p>\",\n        \"is_correct\": true,\n        \"sort_order\": 2\n      }\n    ]\n  }\n}"
+            }
+          ]
         },
         {
           "name": "List Questions",
@@ -478,7 +1274,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/questions?page=1&limit=10&question_set_id={{questionSetId}}",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -487,12 +1285,77 @@
                 "questions"
               ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "limit", "value": "10" },
-                { "key": "question_set_id", "value": "{{questionSetId}}" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "question_set_id",
+                  "value": "{{questionSetId}}"
+                }
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "List Questions - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/questions?page=1&limit=10&question_set_id={{questionSetId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "questions"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "question_set_id",
+                      "value": "{{questionSetId}}"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question list fetched\",\n  \"data\": [\n    {\n      \"_id\": \"680000000000000000001301\",\n      \"question_no\": 1,\n      \"question_type\": \"radio\",\n      \"title_html\": \"<p>What is 2 + 2 ?</p>\",\n      \"options\": [\n        {\n          \"_id\": \"680000000000000000001401\",\n          \"option_key\": \"A\",\n          \"option_text_html\": \"<p>3</p>\"\n        },\n        {\n          \"_id\": \"680000000000000000001402\",\n          \"option_key\": \"B\",\n          \"option_text_html\": \"<p>4</p>\"\n        }\n      ]\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Update Question",
@@ -508,14 +1371,21 @@
               ]
             },
             "method": "PATCH",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"title_html\": \"<p>What is 2 + 3 ?</p>\",\n  \"plain_text\": \"What is 2 + 3 ?\",\n  \"score\": 2\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -523,7 +1393,57 @@
                 "{{questionId}}"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Update Question - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title_html\": \"<p>What is 2 + 3 ?</p>\",\n  \"plain_text\": \"What is 2 + 3 ?\",\n  \"score\": 2\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "questions",
+                    "{{questionId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question updated successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001301\",\n    \"title_html\": \"<p>What is 2 + 3 ?</p>\",\n    \"plain_text\": \"What is 2 + 3 ?\",\n    \"score\": 2\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Add Question Options",
@@ -539,14 +1459,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"options\": [\n    {\"option_key\": \"D\", \"option_text_html\": \"<p>6</p>\", \"is_correct\": false, \"sort_order\": 4}\n  ]\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}/options",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -555,7 +1482,58 @@
                 "options"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Add Question Options - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"options\": [\n    {\"option_key\": \"D\", \"option_text_html\": \"<p>6</p>\", \"is_correct\": false, \"sort_order\": 4}\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}/options",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "questions",
+                    "{{questionId}}",
+                    "options"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question options added\",\n  \"data\": {\n    \"question_id\": \"680000000000000000001301\",\n    \"options\": [\n      {\n        \"_id\": \"680000000000000000001403\",\n        \"option_key\": \"D\",\n        \"option_text_html\": \"<p>6</p>\",\n        \"sort_order\": 4,\n        \"is_correct\": false\n      }\n    ]\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Update Question Option",
@@ -571,14 +1549,21 @@
               ]
             },
             "method": "PATCH",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"option_text_html\": \"<p>Updated option text</p>\",\n  \"is_correct\": false\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}/options/{{optionId}}",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -588,7 +1573,59 @@
                 "{{optionId}}"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Update Question Option - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"option_text_html\": \"<p>Updated option text</p>\",\n  \"is_correct\": false\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}/options/{{optionId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "questions",
+                    "{{questionId}}",
+                    "options",
+                    "{{optionId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question option updated\",\n  \"data\": {\n    \"_id\": \"680000000000000000001401\",\n    \"question_id\": \"680000000000000000001301\",\n    \"option_key\": \"A\",\n    \"option_text_html\": \"<p>Updated option text</p>\",\n    \"is_correct\": false,\n    \"sort_order\": 1\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Assign Candidates",
@@ -604,14 +1641,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"slot_id\": \"{{slotId}}\",\n  \"question_set_id\": \"{{questionSetId}}\",\n  \"student_ids\": [\"{{studentUserId}}\"]\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/candidates/assign",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -621,7 +1665,59 @@
                 "assign"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Assign Candidates - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"slot_id\": \"{{slotId}}\",\n  \"question_set_id\": \"{{questionSetId}}\",\n  \"student_ids\": [\"{{studentUserId}}\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/candidates/assign",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "candidates",
+                    "assign"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Candidates assigned successfully\",\n  \"data\": {\n    \"test_id\": \"680000000000000000001001\",\n    \"slot_id\": \"680000000000000000001101\",\n    \"question_set_id\": \"680000000000000000001201\",\n    \"total_received\": 1,\n    \"assigned_count\": 1,\n    \"updated_count\": 0\n  }\n}"
+            }
+          ]
         },
         {
           "name": "List Candidates",
@@ -640,7 +1736,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/candidates?page=1&limit=10&attendance_status=",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -649,12 +1747,77 @@
                 "candidates"
               ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "limit", "value": "10" },
-                { "key": "attendance_status", "value": "" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "attendance_status",
+                  "value": ""
+                }
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "List Candidates - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/candidates?page=1&limit=10&attendance_status=",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "candidates"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "attendance_status",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Candidate list fetched\",\n  \"data\": [\n    {\n      \"_id\": \"680000000000000000001501\",\n      \"test_id\": \"680000000000000000001001\",\n      \"student_id\": {\n        \"_id\": \"680000000000000000000002\",\n        \"full_name\": \"Demo Student\",\n        \"email\": \"student@example.com\",\n        \"user_id_login\": \"student1\",\n        \"status\": \"active\"\n      },\n      \"attendance_status\": \"not_started\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Publish Test",
@@ -673,7 +1836,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/publish",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -682,7 +1847,49 @@
                 "publish"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Publish Test - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/publish",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "publish"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test published successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001001\",\n    \"status\": \"published\",\n    \"basic_info_completed\": true,\n    \"question_set_completed\": true\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Test Metrics",
@@ -701,7 +1908,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/metrics",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -710,7 +1919,121 @@
                 "metrics"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Test Metrics - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/metrics",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "metrics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test metrics fetched\",\n  \"data\": {\n    \"total_candidates\": 10,\n    \"started_count\": 6,\n    \"submitted_count\": 5,\n    \"timeout_count\": 1,\n    \"absent_count\": 4,\n    \"average_marks\": 38.4,\n    \"highest_marks\": 48,\n    \"lowest_marks\": 22,\n    \"pass_count\": 4,\n    \"fail_count\": 2,\n    \"total_questions\": 20,\n    \"total_question_sets\": 1,\n    \"total_slots\": 1\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Teacher Dashboard Metrics",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{teacher_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/teacher/dashboard/metrics",
+              "host": [
+                "{{base_url}}{{api_prefix}}"
+              ],
+              "path": [
+                "teacher",
+                "dashboard",
+                "metrics"
+              ],
+              "query": []
+            },
+            "description": "Fetch aggregated dashboard metrics across all tests created by the logged-in teacher."
+          },
+          "response": [
+            {
+              "name": "Get Teacher Dashboard Metrics - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/dashboard/metrics",
+                  "host": [
+                    "{{base_url}}{{api_prefix}}"
+                  ],
+                  "path": [
+                    "teacher",
+                    "dashboard",
+                    "metrics"
+                  ],
+                  "query": []
+                },
+                "description": "Fetch aggregated dashboard metrics across all tests created by the logged-in teacher."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Teacher dashboard metrics fetched\",\n  \"data\": {\n    \"exam_overview\": {\n      \"total_exams\": 6,\n      \"draft_exams\": 1,\n      \"published_exams\": 2,\n      \"running_exams\": 1,\n      \"completed_exams\": 1,\n      \"archived_exams\": 1,\n      \"upcoming_exams\": 2,\n      \"live_exams_now\": 1\n    },\n    \"student_overview\": {\n      \"total_assigned_candidates\": 120,\n      \"unique_assigned_students\": 98,\n      \"attended_students\": 86,\n      \"submitted_students\": 73,\n      \"timeout_students\": 8,\n      \"absent_students\": 34,\n      \"attendance_rate\": 71.67,\n      \"submission_rate\": 67.5\n    },\n    \"attempt_overview\": {\n      \"in_progress_attempts\": 5,\n      \"completed_attempts\": 81,\n      \"auto_submitted_attempts\": 11\n    },\n    \"result_overview\": {\n      \"published_results\": 81,\n      \"average_marks\": 38.45,\n      \"highest_marks\": 49,\n      \"lowest_marks\": 12,\n      \"average_percentage\": 76.9,\n      \"pass_count\": 69,\n      \"fail_count\": 12\n    },\n    \"review_overview\": {\n      \"pending_text_reviews\": 14\n    },\n    \"recent_exams\": [\n      {\n        \"_id\": \"680000000000000000001001\",\n        \"title\": \"Sample Mid Term Test\",\n        \"status\": \"running\",\n        \"start_time\": \"2026-12-01T09:00:00.000Z\",\n        \"end_time\": \"2026-12-01T11:00:00.000Z\",\n        \"total_candidates\": 40,\n        \"updated_at\": \"2026-04-11T14:00:00.000Z\"\n      }\n    ]\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Text Answer Reviews",
@@ -744,7 +2067,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/text-answer-reviews?page=1&limit=10&review_status=pending_manual_review",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -753,12 +2078,77 @@
                 "text-answer-reviews"
               ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "limit", "value": "10" },
-                { "key": "review_status", "value": "pending_manual_review" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "review_status",
+                  "value": "pending_manual_review"
+                }
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Text Answer Reviews - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/tests/{{testId}}/text-answer-reviews?page=1&limit=10&review_status=pending_manual_review",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "tests",
+                    "{{testId}}",
+                    "text-answer-reviews"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "review_status",
+                      "value": "pending_manual_review"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Text answer reviews fetched\",\n  \"data\": [\n    {\n      \"_id\": \"680000000000000000001901\",\n      \"attempt_id\": {\n        \"_id\": \"680000000000000000001801\",\n        \"status\": \"submitted\"\n      },\n      \"question_id\": {\n        \"_id\": \"680000000000000000001701\",\n        \"question_no\": 5,\n        \"title_html\": \"<p>Explain Newton's second law</p>\",\n        \"score\": 5\n      },\n      \"student_id\": {\n        \"_id\": \"680000000000000000000002\",\n        \"full_name\": \"Demo Student\",\n        \"email\": \"student@example.com\"\n      },\n      \"review_status\": \"pending_manual_review\",\n      \"text_answer_plain\": \"Force equals mass times acceleration\",\n      \"obtained_marks\": 0\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Review Text Answer",
@@ -774,14 +2164,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"obtained_marks\": 1,\n  \"is_correct\": true,\n  \"review_comment\": \"Good text answer\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/attempt-answers/{{answerId}}/review",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -790,7 +2187,58 @@
                 "review"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Review Text Answer - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"obtained_marks\": 1,\n  \"is_correct\": true,\n  \"review_comment\": \"Good text answer\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/attempt-answers/{{answerId}}/review",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "attempt-answers",
+                    "{{answerId}}",
+                    "review"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Text answer reviewed successfully\",\n  \"data\": {\n    \"answer\": {\n      \"_id\": \"680000000000000000001901\",\n      \"review_status\": \"reviewed\",\n      \"checked_by_teacher\": true,\n      \"obtained_marks\": 4,\n      \"review_comment\": \"Good explanation\"\n    },\n    \"attempt\": {\n      \"_id\": \"680000000000000000001801\",\n      \"status\": \"submitted\",\n      \"obtained_marks\": 44\n    },\n    \"result\": {\n      \"_id\": \"680000000000000000001A01\",\n      \"final_marks\": 44,\n      \"percentage\": 88,\n      \"grade\": \"A+\"\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Delete Question (Soft)",
@@ -809,7 +2257,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "teacher",
@@ -817,7 +2267,48 @@
                 "{{questionId}}"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Delete Question (Soft) - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{teacher_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/teacher/questions/{{questionId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "teacher",
+                    "questions",
+                    "{{questionId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question removed successfully\",\n  \"data\": {\n    \"_id\": \"680000000000000000001301\",\n    \"status\": \"deleted\"\n  }\n}"
+            }
+          ]
         }
       ]
     },
@@ -841,15 +2332,190 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/tests?page=1&limit=10&search=",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "student", "tests"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "student",
+                "tests"
+              ],
               "query": [
-                { "key": "page", "value": "1" },
-                { "key": "limit", "value": "10" },
-                { "key": "search", "value": "" }
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                }
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Assigned Tests - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/tests?page=1&limit=10&search=",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "tests"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Assigned tests fetched\",\n  \"data\": [\n    {\n      \"candidate_id\": \"680000000000000000001501\",\n      \"test_id\": \"680000000000000000001001\",\n      \"title\": \"Sample Mid Term Test\",\n      \"duration_minutes\": 90,\n      \"total_questions\": 20,\n      \"negative_mark_per_wrong\": 0.25,\n      \"start_time\": \"2026-12-01T09:00:00.000Z\",\n      \"end_time\": \"2026-12-01T11:00:00.000Z\",\n      \"status\": \"published\",\n      \"attendance_status\": \"not_started\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Performed Exams History",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}{{api_prefix}}/student/attempts/history?page=1&limit=10&search=&status=all",
+              "host": [
+                "{{base_url}}{{api_prefix}}"
+              ],
+              "path": [
+                "student",
+                "attempts",
+                "history"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": ""
+                },
+                {
+                  "key": "status",
+                  "value": "all"
+                }
+              ]
+            },
+            "description": "Fetch all performed exams for the logged-in student with attempt details and result summary."
+          },
+          "response": [
+            {
+              "name": "Get Performed Exams History - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/history?page=1&limit=10&search=&status=all",
+                  "host": [
+                    "{{base_url}}{{api_prefix}}"
+                  ],
+                  "path": [
+                    "student",
+                    "attempts",
+                    "history"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "search",
+                      "value": ""
+                    },
+                    {
+                      "key": "status",
+                      "value": "all"
+                    }
+                  ]
+                },
+                "description": "Fetch all performed exams for the logged-in student with attempt details and result summary."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Performed exams with attempts fetched\",\n  \"data\": [\n    {\n      \"attempt_id\": \"680000000000000000001801\",\n      \"test_id\": \"680000000000000000001001\",\n      \"slot_id\": \"680000000000000000001101\",\n      \"question_set_id\": \"680000000000000000001201\",\n      \"attempt_no\": 1,\n      \"attempt_status\": \"submitted\",\n      \"started_at\": \"2026-04-11T09:05:00.000Z\",\n      \"submitted_at\": \"2026-04-11T10:22:00.000Z\",\n      \"auto_submitted\": false,\n      \"totals\": {\n        \"total_questions\": 20,\n        \"answered\": 18,\n        \"skipped\": 2,\n        \"correct\": 16,\n        \"wrong\": 2,\n        \"text_pending_review_count\": 0,\n        \"total_marks\": 50,\n        \"obtained_marks\": 41.5\n      },\n      \"test\": {\n        \"test_id\": \"680000000000000000001001\",\n        \"title\": \"Sample Mid Term Test\",\n        \"slug\": \"sample-mid-term-test\",\n        \"status\": \"completed\",\n        \"start_time\": \"2026-04-11T09:00:00.000Z\",\n        \"end_time\": \"2026-04-11T10:30:00.000Z\",\n        \"duration_minutes\": 90\n      },\n      \"result_available\": true,\n      \"result_summary\": {\n        \"total_questions\": 20,\n        \"answered\": 18,\n        \"skipped\": 2,\n        \"correct\": 16,\n        \"wrong\": 2,\n        \"text_answered\": 2,\n        \"mcq_marks\": 38,\n        \"negative_marks\": 0.5,\n        \"manual_added_marks\": 4,\n        \"final_marks\": 41.5,\n        \"percentage\": 83,\n        \"grade\": \"A+\",\n        \"result_status\": \"published\",\n        \"published_at\": \"2026-04-11T10:30:00.000Z\"\n      },\n      \"created_at\": \"2026-04-11T09:05:00.000Z\",\n      \"updated_at\": \"2026-04-11T10:30:00.000Z\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"page\": 1,\n    \"limit\": 10,\n    \"total_pages\": 1,\n    \"has_next\": false,\n    \"has_prev\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Dashboard Metrics",
@@ -868,10 +2534,58 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/dashboard/metrics",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "student", "dashboard", "metrics"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "student",
+                "dashboard",
+                "metrics"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Dashboard Metrics - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/dashboard/metrics",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "dashboard",
+                    "metrics"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Dashboard metrics fetched\",\n  \"data\": {\n    \"assigned_tests\": 3,\n    \"completed_tests\": 2,\n    \"pending_tests\": 1,\n    \"total_correct\": 30,\n    \"total_wrong\": 8,\n    \"total_skipped\": 2,\n    \"average_marks\": 41.25,\n    \"highest_marks\": 48,\n    \"accuracy_rate\": 78.95,\n    \"total_negative_marks\": 2,\n    \"best_test_score\": 48,\n    \"last_test_score\": 44\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Assigned Test Details",
@@ -890,10 +2604,58 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/tests/{{testId}}",
-              "host": ["{{base_url}}"],
-              "path": ["{{api_prefix}}", "student", "tests", "{{testId}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "{{api_prefix}}",
+                "student",
+                "tests",
+                "{{testId}}"
+              ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Assigned Test Details - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/tests/{{testId}}",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "tests",
+                    "{{testId}}"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Assigned test details fetched\",\n  \"data\": {\n    \"candidate_id\": \"680000000000000000001501\",\n    \"test_id\": \"680000000000000000001001\",\n    \"title\": \"Sample Mid Term Test\",\n    \"duration_minutes\": 90,\n    \"total_questions\": 20,\n    \"negative_mark_per_wrong\": 0.25,\n    \"start_time\": \"2026-12-01T09:00:00.000Z\",\n    \"end_time\": \"2026-12-01T11:00:00.000Z\",\n    \"status\": \"published\",\n    \"attendance_status\": \"not_started\"\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Start Test",
@@ -923,14 +2685,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"device_info\": {\n    \"platform\": \"Postman\",\n    \"user_agent\": \"PostmanRuntime\"\n  }\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/tests/{{testId}}/start",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -939,7 +2708,58 @@
                 "start"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Start Test - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"device_info\": {\n    \"platform\": \"Postman\",\n    \"user_agent\": \"PostmanRuntime\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/tests/{{testId}}/start",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "tests",
+                    "{{testId}}",
+                    "start"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Test started successfully\",\n  \"data\": {\n    \"attempt_id\": \"680000000000000000001801\",\n    \"status\": \"in_progress\",\n    \"auto_resumed\": false,\n    \"current_question_no\": 1,\n    \"remaining_seconds\": 5380\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Current Question",
@@ -958,7 +2778,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/current-question",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -967,7 +2789,49 @@
                 "current-question"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Current Question - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/current-question",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "attempts",
+                    "{{attemptId}}",
+                    "current-question"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Current question fetched\",\n  \"data\": {\n    \"status\": \"in_progress\",\n    \"attempt_id\": \"680000000000000000001801\",\n    \"current_question_no\": 1,\n    \"total_questions\": 20,\n    \"remaining_seconds\": 5310,\n    \"current_question\": {\n      \"_id\": \"680000000000000000001301\",\n      \"question_no\": 1,\n      \"question_type\": \"radio\",\n      \"title_html\": \"<p>What is 2 + 2 ?</p>\",\n      \"plain_text\": \"What is 2 + 2 ?\",\n      \"score\": 1,\n      \"negative_mark\": 0.25,\n      \"options\": [\n        {\n          \"_id\": \"680000000000000000001401\",\n          \"option_key\": \"A\",\n          \"option_text_html\": \"<p>3</p>\",\n          \"sort_order\": 1\n        },\n        {\n          \"_id\": \"680000000000000000001402\",\n          \"option_key\": \"B\",\n          \"option_text_html\": \"<p>4</p>\",\n          \"sort_order\": 2\n        }\n      ]\n    },\n    \"existing_answer\": null\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Answer Current Question (MCQ)",
@@ -983,14 +2847,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"selected_option_ids\": [\"{{optionId}}\"]\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/answer",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -999,7 +2870,58 @@
                 "answer"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Answer Current Question (MCQ) - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selected_option_ids\": [\"{{optionId}}\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/answer",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "attempts",
+                    "{{attemptId}}",
+                    "answer"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Answer saved successfully\",\n  \"data\": {\n    \"attempt_id\": \"680000000000000000001801\",\n    \"status\": \"in_progress\",\n    \"current_question_no\": 2,\n    \"total_questions\": 20,\n    \"is_last_question\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Answer Current Question (Text)",
@@ -1015,14 +2937,21 @@
               ]
             },
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"text_answer_plain\": \"This is my written answer\",\n  \"text_answer_html\": \"<p>This is my written answer</p>\"\n}"
             },
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/answer",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -1031,7 +2960,58 @@
                 "answer"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Answer Current Question (Text) - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"text_answer_plain\": \"This is my written answer\",\n  \"text_answer_html\": \"<p>This is my written answer</p>\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/answer",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "attempts",
+                    "{{attemptId}}",
+                    "answer"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Answer saved successfully\",\n  \"data\": {\n    \"attempt_id\": \"680000000000000000001801\",\n    \"status\": \"in_progress\",\n    \"current_question_no\": 6,\n    \"total_questions\": 20,\n    \"is_last_question\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Skip Current Question",
@@ -1050,7 +3030,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/skip",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -1059,7 +3041,49 @@
                 "skip"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Skip Current Question - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/skip",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "attempts",
+                    "{{attemptId}}",
+                    "skip"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Question skipped successfully\",\n  \"data\": {\n    \"attempt_id\": \"680000000000000000001801\",\n    \"status\": \"in_progress\",\n    \"current_question_no\": 7,\n    \"total_questions\": 20,\n    \"is_last_question\": false\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Submit Attempt",
@@ -1078,7 +3102,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/submit",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -1087,7 +3113,49 @@
                 "submit"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Submit Attempt - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/submit",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "attempts",
+                    "{{attemptId}}",
+                    "submit"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Attempt submitted successfully\",\n  \"data\": {\n    \"attempt_id\": \"680000000000000000001801\",\n    \"status\": \"submitted\",\n    \"auto_submitted\": false,\n    \"result_available\": true,\n    \"result_summary\": {\n      \"total_questions\": 20,\n      \"answered\": 18,\n      \"skipped\": 2,\n      \"correct\": 16,\n      \"wrong\": 2,\n      \"text_answered\": 2,\n      \"mcq_marks\": 38,\n      \"negative_marks\": 0.5,\n      \"manual_added_marks\": 4,\n      \"final_marks\": 41.5,\n      \"percentage\": 83,\n      \"grade\": \"A+\",\n      \"result_status\": \"published\"\n    }\n  }\n}"
+            }
+          ]
         },
         {
           "name": "Get Attempt Result",
@@ -1106,7 +3174,9 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/result",
-              "host": ["{{base_url}}"],
+              "host": [
+                "{{base_url}}"
+              ],
               "path": [
                 "{{api_prefix}}",
                 "student",
@@ -1115,7 +3185,49 @@
                 "result"
               ]
             }
-          }
+          },
+          "response": [
+            {
+              "name": "Get Attempt Result - Success Example",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{student_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}{{api_prefix}}/student/attempts/{{attemptId}}/result",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "{{api_prefix}}",
+                    "student",
+                    "attempts",
+                    "{{attemptId}}",
+                    "result"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Attempt result fetched\",\n  \"data\": {\n    \"attempt_id\": \"680000000000000000001801\",\n    \"status\": \"submitted\",\n    \"result_available\": true,\n    \"result_summary\": {\n      \"total_questions\": 20,\n      \"answered\": 18,\n      \"skipped\": 2,\n      \"correct\": 16,\n      \"wrong\": 2,\n      \"text_answered\": 2,\n      \"mcq_marks\": 38,\n      \"negative_marks\": 0.5,\n      \"manual_added_marks\": 4,\n      \"final_marks\": 41.5,\n      \"percentage\": 83,\n      \"grade\": \"A+\",\n      \"result_status\": \"published\"\n    }\n  }\n}"
+            }
+          ]
         }
       ]
     }

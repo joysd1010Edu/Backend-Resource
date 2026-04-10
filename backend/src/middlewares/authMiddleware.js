@@ -16,9 +16,12 @@ const auth = asyncHandler(async (req, res, next) => {
     throw new ApiError(401, "Authentication required");
   }
 
-  const secret = process.env.JWT_SECRET;
+  const secret = process.env.JWT_ACCESS_SECRET || process.env.JWT_SECRET;
   if (!secret) {
-    throw new ApiError(500, "JWT_SECRET is missing in environment variables");
+    throw new ApiError(
+      500,
+      "JWT_ACCESS_SECRET or JWT_SECRET is missing in environment variables",
+    );
   }
 
   let payload;
@@ -26,6 +29,10 @@ const auth = asyncHandler(async (req, res, next) => {
     payload = jwt.verify(token, secret);
   } catch (error) {
     throw new ApiError(401, "Invalid or expired token");
+  }
+
+  if (payload.token_type && payload.token_type !== "access") {
+    throw new ApiError(401, "Invalid token type for protected route");
   }
 
   const user = await User.findById(payload.sub)

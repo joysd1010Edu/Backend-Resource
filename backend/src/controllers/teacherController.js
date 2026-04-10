@@ -12,6 +12,11 @@ const getTests = asyncHandler(async (req, res) => {
   sendSuccess(res, result.items, "Test list fetched", 200, result.meta);
 });
 
+const getDashboardMetrics = asyncHandler(async (req, res) => {
+  const metrics = await teacherService.getTeacherDashboardMetrics(req.user);
+  sendSuccess(res, metrics, "Teacher dashboard metrics fetched");
+});
+
 const getTestById = asyncHandler(async (req, res) => {
   const test = await teacherService.getTestDetails(req.params.testId, req.user);
   sendSuccess(res, test, "Test details fetched");
@@ -162,6 +167,7 @@ const reviewTextAnswer = asyncHandler(async (req, res) => {
 module.exports = {
   createTest,
   getTests,
+  getDashboardMetrics,
   getTestById,
   updateTest,
   createSlot,

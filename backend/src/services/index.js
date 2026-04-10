@@ -1,6 +1,10 @@
 const {
   generateAccessToken,
+  generateRefreshToken,
   loginUser,
+  registerUser,
+  refreshAuthTokens,
+  logoutUser,
   createSeedUser,
   getMyProfile,
 } = require("./authService");
@@ -9,7 +13,11 @@ const resultService = require("./resultService");
 
 module.exports = {
   generateAccessToken,
+  generateRefreshToken,
   loginUser,
+  registerUser,
+  refreshAuthTokens,
+  logoutUser,
   createSeedUser,
   getMyProfile,
   ...studentService,

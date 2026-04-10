@@ -41,6 +41,7 @@ router.get(
   validateRequest,
   teacherController.getTests,
 );
+router.get("/dashboard/metrics", teacherController.getDashboardMetrics);
 router.get(
   "/tests/:testId",
   testIdParamValidator,

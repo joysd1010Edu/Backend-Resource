@@ -984,6 +984,277 @@ async function publishTest(testId, user) {
   return test;
 }
 
+async function getTeacherDashboardMetrics(user) {
+  assertAllowedRole(user);
+
+  const testFilter = user.role === "teacher" ? { created_by: user._id } : {};
+  const now = new Date();
+
+  const [testStatusStats, testIds] = await Promise.all([
+    Test.aggregate([
+      {
+        $match: testFilter,
+      },
+      {
+        $group: {
+          _id: null,
+          total_exams: { $sum: 1 },
+          draft_exams: {
+            $sum: { $cond: [{ $eq: ["$status", "draft"] }, 1, 0] },
+          },
+          published_exams: {
+            $sum: { $cond: [{ $eq: ["$status", "published"] }, 1, 0] },
+          },
+          running_exams: {
+            $sum: { $cond: [{ $eq: ["$status", "running"] }, 1, 0] },
+          },
+          completed_exams: {
+            $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] },
+          },
+          archived_exams: {
+            $sum: { $cond: [{ $eq: ["$status", "archived"] }, 1, 0] },
+          },
+          upcoming_exams: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gt: ["$start_time", now] },
+                    { $in: ["$status", ["draft", "published", "running"]] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+          live_exams_now: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $lte: ["$start_time", now] },
+                    { $gte: ["$end_time", now] },
+                    { $in: ["$status", ["published", "running"]] },
+                  ],
+                },
+                1,
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ]),
+    Test.find(testFilter).select("_id").lean(),
+  ]);
+
+  const stats = testStatusStats[0] || {};
+  const managedTestIds = testIds.map((item) => item._id);
+
+  if (managedTestIds.length === 0) {
+    return {
+      exam_overview: {
+        total_exams: 0,
+        draft_exams: 0,
+        published_exams: 0,
+        running_exams: 0,
+        completed_exams: 0,
+        archived_exams: 0,
+        upcoming_exams: 0,
+        live_exams_now: 0,
+      },
+      student_overview: {
+        total_assigned_candidates: 0,
+        unique_assigned_students: 0,
+        attended_students: 0,
+        submitted_students: 0,
+        timeout_students: 0,
+        absent_students: 0,
+        attendance_rate: 0,
+        submission_rate: 0,
+      },
+      attempt_overview: {
+        in_progress_attempts: 0,
+        completed_attempts: 0,
+        auto_submitted_attempts: 0,
+      },
+      result_overview: {
+        published_results: 0,
+        average_marks: 0,
+        highest_marks: 0,
+        lowest_marks: 0,
+        average_percentage: 0,
+        pass_count: 0,
+        fail_count: 0,
+      },
+      review_overview: {
+        pending_text_reviews: 0,
+      },
+      recent_exams: [],
+    };
+  }
+
+  const [
+    totalAssignedCandidates,
+    uniqueAssignedStudents,
+    attendedStudents,
+    submittedStudents,
+    timeoutStudents,
+    absentStudents,
+    attemptStats,
+    resultStats,
+    pendingTextReviews,
+    recentExams,
+  ] = await Promise.all([
+    TestCandidate.countDocuments({ test_id: { $in: managedTestIds } }),
+    TestCandidate.distinct("student_id", { test_id: { $in: managedTestIds } }),
+    TestCandidate.countDocuments({
+      test_id: { $in: managedTestIds },
+      attendance_status: { $in: ["in_progress", "submitted", "timeout"] },
+    }),
+    TestCandidate.countDocuments({
+      test_id: { $in: managedTestIds },
+      attendance_status: "submitted",
+    }),
+    TestCandidate.countDocuments({
+      test_id: { $in: managedTestIds },
+      attendance_status: "timeout",
+    }),
+    TestCandidate.countDocuments({
+      test_id: { $in: managedTestIds },
+      attendance_status: "absent",
+    }),
+    TestAttempt.aggregate([
+      {
+        $match: {
+          test_id: {
+            $in: managedTestIds,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          in_progress_attempts: {
+            $sum: {
+              $cond: [{ $eq: ["$status", "in_progress"] }, 1, 0],
+            },
+          },
+          completed_attempts: {
+            $sum: {
+              $cond: [{ $in: ["$status", ["submitted", "timeout", "evaluated"]] }, 1, 0],
+            },
+          },
+          auto_submitted_attempts: {
+            $sum: {
+              $cond: [{ $eq: ["$auto_submitted", true] }, 1, 0],
+            },
+          },
+        },
+      },
+    ]),
+    TestResult.aggregate([
+      {
+        $match: {
+          test_id: {
+            $in: managedTestIds,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          published_results: {
+            $sum: {
+              $cond: [{ $eq: ["$result_status", "published"] }, 1, 0],
+            },
+          },
+          average_marks: { $avg: "$final_marks" },
+          highest_marks: { $max: "$final_marks" },
+          lowest_marks: { $min: "$final_marks" },
+          average_percentage: { $avg: "$percentage" },
+          pass_count: {
+            $sum: {
+              $cond: [{ $gte: ["$percentage", 40] }, 1, 0],
+            },
+          },
+          fail_count: {
+            $sum: {
+              $cond: [{ $lt: ["$percentage", 40] }, 1, 0],
+            },
+          },
+        },
+      },
+    ]),
+    AttemptAnswer.countDocuments({
+      test_id: { $in: managedTestIds },
+      question_type: "text",
+      review_status: "pending_manual_review",
+    }),
+    Test.find({ _id: { $in: managedTestIds } })
+      .select("_id title status start_time end_time total_candidates updated_at")
+      .sort({ updated_at: -1, created_at: -1 })
+      .limit(5)
+      .lean(),
+  ]);
+
+  const attemptOverview = attemptStats[0] || {};
+  const resultOverview = resultStats[0] || {};
+
+  const attendanceRate =
+    totalAssignedCandidates > 0
+      ? (attendedStudents / totalAssignedCandidates) * 100
+      : 0;
+  const submissionRate =
+    totalAssignedCandidates > 0
+      ? ((submittedStudents + timeoutStudents) / totalAssignedCandidates) * 100
+      : 0;
+
+  return {
+    exam_overview: {
+      total_exams: Number(stats.total_exams || 0),
+      draft_exams: Number(stats.draft_exams || 0),
+      published_exams: Number(stats.published_exams || 0),
+      running_exams: Number(stats.running_exams || 0),
+      completed_exams: Number(stats.completed_exams || 0),
+      archived_exams: Number(stats.archived_exams || 0),
+      upcoming_exams: Number(stats.upcoming_exams || 0),
+      live_exams_now: Number(stats.live_exams_now || 0),
+    },
+    student_overview: {
+      total_assigned_candidates: Number(totalAssignedCandidates || 0),
+      unique_assigned_students: Number(uniqueAssignedStudents.length || 0),
+      attended_students: Number(attendedStudents || 0),
+      submitted_students: Number(submittedStudents || 0),
+      timeout_students: Number(timeoutStudents || 0),
+      absent_students: Number(absentStudents || 0),
+      attendance_rate: Number(attendanceRate.toFixed(2)),
+      submission_rate: Number(submissionRate.toFixed(2)),
+    },
+    attempt_overview: {
+      in_progress_attempts: Number(attemptOverview.in_progress_attempts || 0),
+      completed_attempts: Number(attemptOverview.completed_attempts || 0),
+      auto_submitted_attempts: Number(
+        attemptOverview.auto_submitted_attempts || 0,
+      ),
+    },
+    result_overview: {
+      published_results: Number(resultOverview.published_results || 0),
+      average_marks: Number(resultOverview.average_marks || 0),
+      highest_marks: Number(resultOverview.highest_marks || 0),
+      lowest_marks: Number(resultOverview.lowest_marks || 0),
+      average_percentage: Number(resultOverview.average_percentage || 0),
+      pass_count: Number(resultOverview.pass_count || 0),
+      fail_count: Number(resultOverview.fail_count || 0),
+    },
+    review_overview: {
+      pending_text_reviews: Number(pendingTextReviews || 0),
+    },
+    recent_exams: recentExams,
+  };
+}
+
 async function getTestMetrics(testId, user) {
   const test = await getManagedTest(testId, user);
 
@@ -1191,6 +1462,7 @@ async function reviewTextAnswer(answerId, payload, user) {
 module.exports = {
   createTest,
   listTests,
+  getTeacherDashboardMetrics,
   getTestDetails,
   updateTest,
   createTestSlot,

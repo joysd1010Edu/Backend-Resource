@@ -9,6 +9,7 @@ const TestAttempt = require("./testAttempt.model");
 const AttemptAnswer = require("./attemptAnswer.model");
 const TestResult = require("./testResult.model");
 const ActivityLog = require("./activityLog.model");
+const RefreshToken = require("./refreshToken.model");
 
 const modelMap = {
   User,
@@ -22,6 +23,7 @@ const modelMap = {
   AttemptAnswer,
   TestResult,
   ActivityLog,
+  RefreshToken,
 };
 
 async function syncAllIndexes() {

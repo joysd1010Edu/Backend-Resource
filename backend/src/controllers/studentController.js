@@ -7,6 +7,17 @@ const getAssignedTests = asyncHandler(async (req, res) => {
   sendSuccess(res, result.items, "Assigned tests fetched", 200, result.meta);
 });
 
+const getPerformedExams = asyncHandler(async (req, res) => {
+  const result = await studentService.listPerformedExams(req.query, req.user);
+  sendSuccess(
+    res,
+    result.items,
+    "Performed exams with attempts fetched",
+    200,
+    result.meta,
+  );
+});
+
 const getDashboardMetrics = asyncHandler(async (req, res) => {
   const metrics = await studentService.getStudentDashboardMetrics(req.user);
   sendSuccess(res, metrics, "Dashboard metrics fetched");
@@ -72,6 +83,7 @@ const getAttemptResult = asyncHandler(async (req, res) => {
 
 module.exports = {
   getAssignedTests,
+  getPerformedExams,
   getDashboardMetrics,
   getTestById,
   startTest,

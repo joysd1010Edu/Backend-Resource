@@ -6,6 +6,7 @@ const validateRequest = require("../middlewares/validateRequest");
 const studentController = require("../controllers/studentController");
 const {
   studentTestsQueryValidator,
+  performedExamsQueryValidator,
   testIdParamValidator,
   attemptIdParamValidator,
   startTestValidator,
@@ -24,6 +25,12 @@ router.get(
   studentTestsQueryValidator,
   validateRequest,
   studentController.getAssignedTests,
+);
+router.get(
+  "/attempts/history",
+  performedExamsQueryValidator,
+  validateRequest,
+  studentController.getPerformedExams,
 );
 router.get("/dashboard/metrics", studentController.getDashboardMetrics);
 router.get(

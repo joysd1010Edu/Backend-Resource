@@ -289,6 +289,151 @@ async function listAssignedTests(query, user) {
   };
 }
 
+async function listPerformedExams(query, user) {
+  ensureStudentRole(user);
+
+  const { page, limit, skip } = parsePagination(query, { page: 1, limit: 10 });
+
+  const statusFilter = String(query.status || "all").toLowerCase();
+  const statuses =
+    statusFilter === "all" ? ["submitted", "timeout"] : [statusFilter];
+
+  const pipeline = [
+    {
+      $match: {
+        student_id: getObjectId(user._id),
+        status: { $in: statuses },
+      },
+    },
+    {
+      $lookup: {
+        from: "tests",
+        localField: "test_id",
+        foreignField: "_id",
+        as: "test",
+      },
+    },
+    { $unwind: "$test" },
+  ];
+
+  if (query.search) {
+    pipeline.push({
+      $match: {
+        "test.title": {
+          $regex: escapeRegex(String(query.search).trim()),
+          $options: "i",
+        },
+      },
+    });
+  }
+
+  pipeline.push(
+    { $sort: { submitted_at: -1, started_at: -1, updated_at: -1, _id: -1 } },
+    {
+      $project: {
+        _id: 1,
+        test_id: 1,
+        question_set_id: 1,
+        slot_id: 1,
+        attempt_no: 1,
+        started_at: 1,
+        submitted_at: 1,
+        status: 1,
+        auto_submitted: 1,
+        total_questions: 1,
+        answered_count: 1,
+        skipped_count: 1,
+        correct_count: 1,
+        wrong_count: 1,
+        text_pending_review_count: 1,
+        total_marks: 1,
+        obtained_marks: 1,
+        created_at: 1,
+        updated_at: 1,
+        test: {
+          _id: "$test._id",
+          title: "$test.title",
+          slug: "$test.slug",
+          status: "$test.status",
+          start_time: "$test.start_time",
+          end_time: "$test.end_time",
+          duration_minutes: "$test.duration_minutes",
+          show_result_to_student: "$test.show_result_to_student",
+        },
+      },
+    },
+  );
+
+  const countPipeline = [...pipeline, { $count: "total" }];
+  const dataPipeline = [...pipeline, { $skip: skip }, { $limit: limit }];
+
+  const [rows, totalRows] = await Promise.all([
+    TestAttempt.aggregate(dataPipeline),
+    TestAttempt.aggregate(countPipeline),
+  ]);
+
+  const attemptIds = rows.map((row) => row._id);
+  const results = attemptIds.length
+    ? await TestResult.find({
+        attempt_id: {
+          $in: attemptIds,
+        },
+      }).lean()
+    : [];
+
+  const resultMap = new Map(
+    results.map((result) => [String(result.attempt_id), result]),
+  );
+
+  const items = rows.map((row) => {
+    const result = resultMap.get(String(row._id));
+    const canShowResult = Boolean(row.test?.show_result_to_student);
+
+    return {
+      attempt_id: row._id,
+      test_id: row.test_id,
+      slot_id: row.slot_id,
+      question_set_id: row.question_set_id,
+      attempt_no: row.attempt_no,
+      attempt_status: row.status,
+      started_at: row.started_at,
+      submitted_at: row.submitted_at,
+      auto_submitted: row.auto_submitted,
+      totals: {
+        total_questions: row.total_questions,
+        answered: row.answered_count,
+        skipped: row.skipped_count,
+        correct: row.correct_count,
+        wrong: row.wrong_count,
+        text_pending_review_count: row.text_pending_review_count,
+        total_marks: row.total_marks,
+        obtained_marks: row.obtained_marks,
+      },
+      test: {
+        test_id: row.test?._id,
+        title: row.test?.title,
+        slug: row.test?.slug,
+        status: row.test?.status,
+        start_time: row.test?.start_time,
+        end_time: row.test?.end_time,
+        duration_minutes: row.test?.duration_minutes,
+      },
+      result_available: canShowResult && Boolean(result),
+      result_summary:
+        canShowResult && result ? buildResultSummaryPayload(result) : null,
+      created_at: row.created_at,
+      updated_at: row.updated_at,
+    };
+  });
+
+  const total = totalRows[0]?.total || 0;
+
+  return {
+    items,
+    meta: buildPaginationMeta({ total, page, limit }),
+  };
+}
+
 async function getAssignedTestDetails(testId, user) {
   ensureStudentRole(user);
 
@@ -935,6 +1080,7 @@ async function getAttemptResult(attemptId, user) {
 
 module.exports = {
   listAssignedTests,
+  listPerformedExams,
   getAssignedTestDetails,
   getStudentDashboardMetrics,
   startTest,

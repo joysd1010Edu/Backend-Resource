@@ -27,8 +27,8 @@ const registerValidator = [
     .withMessage("password must be at least 8 characters"),
   body("role")
     .optional()
-    .isIn(["teacher", "student", "admin"])
-    .withMessage("role must be teacher, student, or admin"),
+    .isIn(["teacher", "student"])
+    .withMessage("role must be teacher or student"),
   body().custom((value) => {
     if (!value?.email && !value?.user_id_login) {
       throw new Error("email or user_id_login is required");
@@ -52,6 +52,20 @@ const registerValidator = [
     .optional()
     .isString()
     .withMessage("profile_image must be a string"),
+];
+
+const refreshTokenValidator = [
+  body("refresh_token")
+    .optional()
+    .isString()
+    .withMessage("refresh_token must be a string"),
+];
+
+const logoutValidator = [
+  body("refresh_token")
+    .optional()
+    .isString()
+    .withMessage("refresh_token must be a string"),
 ];
 
 const registerSeedValidator = [
@@ -87,5 +101,7 @@ const registerSeedValidator = [
 module.exports = {
   loginValidator,
   registerValidator,
+  refreshTokenValidator,
+  logoutValidator,
   registerSeedValidator,
 };
