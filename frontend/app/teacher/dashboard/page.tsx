@@ -43,7 +43,7 @@ export default function TeacherDashboardPage() {
   const metrics = data?.data;
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 animate-page-enter">
+    <section className="mx-auto min-h-[85vh] w-full max-w-7xl px-4 py-8 animate-page-enter">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-900">Teacher Dashboard</h1>
         <p className="text-sm text-slate-600">

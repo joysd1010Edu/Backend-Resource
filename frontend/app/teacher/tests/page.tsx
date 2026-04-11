@@ -18,11 +18,13 @@ export default function TeacherTestsPage() {
   });
 
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-8 animate-page-enter">
+    <section className="mx-auto min-h-[85vh] w-full max-w-7xl px-4 py-8 animate-page-enter">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900">All Test</h1>
-          <p className="text-sm text-slate-600">Browse and manage your created exams.</p>
+          <p className="text-sm text-slate-600">
+            Browse and manage your created exams.
+          </p>
         </div>
         <Input
           value={search}
@@ -51,7 +53,9 @@ export default function TeacherTestsPage() {
       </div>
 
       {!isLoading && (data?.items || []).length === 0 ? (
-        <p className="mt-5 text-sm text-slate-500">No tests found for this filter.</p>
+        <p className="mt-5 text-sm text-slate-500">
+          No tests found for this filter.
+        </p>
       ) : null}
     </section>
   );

@@ -6,5 +6,5 @@ export default function StudentLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <RoleGuard className="" requiredRole="student">{children}</RoleGuard>;
+  return <RoleGuard requiredRole="student">{children}</RoleGuard>;
 }
