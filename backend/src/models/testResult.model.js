@@ -112,12 +112,10 @@ const testResultSchema = new mongoose.Schema(
 
 testResultSchema.index({ test_id: 1, student_id: 1, slot_id: 1 });
 
-testResultSchema.pre("save", function setPublishedAt(next) {
+testResultSchema.pre("save", function setPublishedAt() {
   if (this.result_status === "published" && !this.published_at) {
     this.published_at = new Date();
   }
-
-  next();
 });
 
 const TestResult = mongoose.model("TestResult", testResultSchema);

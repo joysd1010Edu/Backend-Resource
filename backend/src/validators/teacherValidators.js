@@ -28,6 +28,22 @@ const createTestValidator = [
   body("duration_minutes")
     .isInt({ min: 1 })
     .withMessage("duration_minutes must be at least 1"),
+  body("total_slots")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("total_slots must be >= 1"),
+  body("total_question_set")
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage("total_question_set must be >= 1"),
+  body("total_candidates")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("total_candidates must be >= 0"),
+  body("total_audience")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("total_audience must be >= 0"),
   body("question_type_mode")
     .optional()
     .isIn(QUESTION_TYPE_MODES)

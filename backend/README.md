@@ -1,6 +1,6 @@
 
 
-# Online Test Platform Akij IBOS backend
+# Online Test Platform  backend
 
 
 ### Stack

@@ -8,7 +8,14 @@ const { connectToDatabase, closeDatabase } = require("./config/db");
 const { syncAllIndexes } = require("./models");
 
 const port = Number(process.env.PORT) || 5000;
-const shouldSyncIndexes = process.env.SYNC_INDEXES !== "false";
+const shouldSyncIndexes = process.env.SYNC_INDEXES === "true";
+const isProduction = process.env.NODE_ENV === "production";
+
+function logInfo(message) {
+  if (!isProduction) {
+    console.log(message);
+  }
+}
 
 /* ==========  Function startServer contains reusable module logic used by this feature.  ===============*/
 async function startServer() {
@@ -16,16 +23,16 @@ async function startServer() {
     await connectToDatabase();
     if (shouldSyncIndexes) {
       await syncAllIndexes();
-      console.log("Mongoose indexes synced");
+      logInfo("Mongoose indexes synced");
     }
 
     const server = app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
+      logInfo(`Server is running on port ${port}`);
     });
 
     /* ==========  Function gracefulShutdown contains reusable module logic used by this feature.  ===============*/
     const gracefulShutdown = (signal) => {
-      console.log(`${signal} received. Closing server...`);
+      logInfo(`${signal} received. Closing server...`);
       server.close(async () => {
         await closeDatabase();
         process.exit(0);
@@ -41,3 +48,13 @@ async function startServer() {
 }
 
 startServer();
+
+process.on("unhandledRejection", (error) => {
+  console.error("Unhandled promise rejection:", error);
+  process.exit(1);
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught exception:", error);
+  process.exit(1);
+});

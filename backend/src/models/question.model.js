@@ -86,7 +86,7 @@ const questionSchema = new mongoose.Schema(
 questionSchema.index({ question_set_id: 1, question_no: 1 }, { unique: true });
 questionSchema.index({ test_id: 1, question_set_id: 1, status: 1 });
 
-questionSchema.pre("validate", function setHasOptions(next) {
+questionSchema.pre("validate", function setHasOptions() {
   if (["radio", "checkbox"].includes(this.question_type)) {
     this.has_options = true;
   }
@@ -94,8 +94,6 @@ questionSchema.pre("validate", function setHasOptions(next) {
   if (this.question_type === "text") {
     this.has_options = false;
   }
-
-  next();
 });
 
 const Question = mongoose.model("Question", questionSchema);

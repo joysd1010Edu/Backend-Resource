@@ -113,7 +113,7 @@ const testSchema = new mongoose.Schema(
 testSchema.index({ created_by: 1, status: 1 });
 testSchema.index({ start_time: 1, end_time: 1 });
 
-testSchema.pre("validate", function buildSlug(next) {
+testSchema.pre("validate", function buildSlug() {
   if ((this.isNew || this.isModified("title")) && !this.slug && this.title) {
     this.slug = toSlug(this.title);
   }
@@ -121,11 +121,9 @@ testSchema.pre("validate", function buildSlug(next) {
   if (this.isModified("slug") && this.slug) {
     this.slug = toSlug(this.slug);
   }
-
-  next();
 });
 
-testSchema.pre("save", async function ensureUniqueSlug(next) {
+testSchema.pre("save", async function ensureUniqueSlug() {
   if (!this.slug) {
     this.slug = toSlug(this.title);
   }
@@ -141,8 +139,6 @@ testSchema.pre("save", async function ensureUniqueSlug(next) {
   if (existing) {
     this.slug = `${this.slug}-${Date.now().toString(36)}`;
   }
-
-  next();
 });
 
 const Test = mongoose.model("Test", testSchema);

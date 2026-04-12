@@ -70,6 +70,9 @@ export interface CreateTeacherTestPayload {
   start_time: string;
   end_time: string;
   duration_minutes: number;
+  total_candidates?: number;
+  total_slots?: number;
+  total_question_set?: number;
   question_type_mode?: "radio" | "checkbox" | "text" | "mixed";
 }
 

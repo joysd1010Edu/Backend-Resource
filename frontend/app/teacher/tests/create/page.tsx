@@ -14,6 +14,7 @@ import { createTeacherTest } from "@/lib/api/teacher";
 
 type CreateTestFormState = {
   title: string;
+  total_audience: string;
   total_slots: string;
   total_question_set: string;
   question_type_mode: "mixed" | "radio" | "checkbox" | "text";
@@ -32,8 +33,25 @@ function parseErrorMessage(error: unknown) {
     (error as { response?: unknown }).response !== null
   ) {
     const responseData = (
-      error as { response?: { data?: { message?: string } } }
+      error as {
+        response?: {
+          data?: {
+            message?: string;
+            errors?: Array<{ field?: string; message?: string }>;
+          };
+        };
+      }
     ).response?.data;
+
+    const firstValidationError = responseData?.errors?.find(
+      (item) => typeof item?.message === "string" && item.message.trim(),
+    );
+
+    if (firstValidationError?.message) {
+      return firstValidationError.field
+        ? `${firstValidationError.field}: ${firstValidationError.message}`
+        : firstValidationError.message;
+    }
 
     if (typeof responseData?.message === "string") {
       return responseData.message;
@@ -51,6 +69,7 @@ export default function CreateTeacherTestPage() {
   const router = useRouter();
   const [form, setForm] = useState<CreateTestFormState>({
     title: "",
+    total_audience: "0",
     total_slots: "1",
     total_question_set: "1",
     question_type_mode: "mixed",
@@ -68,6 +87,9 @@ export default function CreateTeacherTestPage() {
     event.preventDefault();
 
     const duration = Number(form.duration_minutes);
+    const totalAudience = Number(form.total_audience);
+    const totalSlots = Number(form.total_slots);
+    const totalQuestionSet = Number(form.total_question_set);
     const startTime = new Date(form.start_time);
     const endTime = new Date(form.end_time);
 
@@ -83,6 +105,34 @@ export default function CreateTeacherTestPage() {
       await showTaskError(
         "Create online test",
         "Duration must be at least 1 minute.",
+      );
+      return;
+    }
+
+    if (
+      !Number.isFinite(totalAudience) ||
+      totalAudience < 0 ||
+      !Number.isInteger(totalAudience)
+    ) {
+      await showTaskError(
+        "Create online test",
+        "Total audience must be a whole number greater than or equal to 0.",
+      );
+      return;
+    }
+
+    if (!Number.isInteger(totalSlots) || totalSlots < 1) {
+      await showTaskError(
+        "Create online test",
+        "Total slots must be at least 1.",
+      );
+      return;
+    }
+
+    if (!Number.isInteger(totalQuestionSet) || totalQuestionSet < 1) {
+      await showTaskError(
+        "Create online test",
+        "Total question set must be at least 1.",
       );
       return;
     }
@@ -109,6 +159,9 @@ export default function CreateTeacherTestPage() {
         start_time: startTime.toISOString(),
         end_time: endTime.toISOString(),
         duration_minutes: duration,
+        total_candidates: totalAudience,
+        total_slots: totalSlots,
+        total_question_set: totalQuestionSet,
         question_type_mode: form.question_type_mode,
       });
 
@@ -183,6 +236,30 @@ export default function CreateTeacherTestPage() {
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="totalAudience"
+                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                    >
+                      Total Audience
+                    </label>
+                    <Input
+                      id="totalAudience"
+                      type="number"
+                      min={0}
+                      step={1}
+                      value={form.total_audience}
+                      onChange={(event) =>
+                        setForm((previous) => ({
+                          ...previous,
+                          total_audience: event.target.value,
+                        }))
+                      }
+                      placeholder="Total audience"
+                      className="h-11 bg-white"
+                    />
+                  </div>
+
                   <div>
                     <label
                       htmlFor="totalSlots"

@@ -215,15 +215,31 @@ function getSortOptions(sortBy, sortOrder) {
 async function createTest(payload, user) {
   assertAllowedRole(user);
 
+  const requestedAudience =
+    payload.total_candidates ?? payload.total_audience ?? 0;
+  const totalCandidates = Number(requestedAudience);
+  const requestedTotalSlots = Number(payload.total_slots ?? 1);
+  const requestedTotalQuestionSets = Number(payload.total_question_set ?? 1);
+
   const test = await Test.create({
     title: payload.title,
     created_by: user._id,
     start_time: payload.start_time,
     end_time: payload.end_time,
     duration_minutes: payload.duration_minutes,
-    total_candidates: 0,
-    total_slots: 0,
-    total_question_set: 0,
+    total_candidates:
+      Number.isFinite(totalCandidates) && totalCandidates >= 0
+        ? totalCandidates
+        : 0,
+    total_slots:
+      Number.isInteger(requestedTotalSlots) && requestedTotalSlots >= 1
+        ? requestedTotalSlots
+        : 1,
+    total_question_set:
+      Number.isInteger(requestedTotalQuestionSets) &&
+      requestedTotalQuestionSets >= 1
+        ? requestedTotalQuestionSets
+        : 1,
     question_type_mode: payload.question_type_mode || "mixed",
     negative_marking_enabled: Boolean(payload.negative_marking_enabled),
     negative_mark_per_wrong: payload.negative_mark_per_wrong || 0,

@@ -1,0 +1,80 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - backend/**
+      - .github/workflows/ci.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - backend/**
+      - .github/workflows/ci.yml
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")' --quiet"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Start backend server
+        env:
+          NODE_ENV: test
+          PORT: 5000
+          MONGODB_URI: mongodb://127.0.0.1:27017/ibos_ci
+          DB_NAME: ibos_ci
+          JWT_SECRET: ci-jwt-secret
+          JWT_EXPIRES_IN: 1d
+          SYNC_INDEXES: false
+        run: |
+          npm start > ../backend-server.log 2>&1 &
+
+      - name: Wait for backend health endpoint
+        run: |
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:5000/api/health > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Backend did not become healthy in time"
+          cat ../backend-server.log
+          exit 1
+
+      - name: Run Postman API tests
+        run: npm run test:api
+
+      - name: Print backend logs on failure
+        if: failure()
+        run: cat ../backend-server.log
